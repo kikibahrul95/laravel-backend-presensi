@@ -12,6 +12,7 @@
         "bezhansalleh/filament-shield": "^3.3",
         "filament/filament": "3.2",
         "guzzlehttp/guzzle": "^7.2",
+        "humaidem/filament-map-picker": "^0.1.5",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8"

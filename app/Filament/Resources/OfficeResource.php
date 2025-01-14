@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Humaidem\FilamentMapPicker\Fields\OSMMap;
 
 class OfficeResource extends Resource
 {
@@ -26,6 +27,17 @@ class OfficeResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                    OSMMap::make('location')
+                    ->label('Location')
+                    ->showMarker()
+                    ->draggable()
+                    ->extraControl([
+                        'zoomDelta'           => 1,
+                        'zoomSnap'            => 0.25,
+                        'wheelPxPerZoomLevel' => 60
+                    ])
+                    // tiles url (refer to https://www.spatialbias.com/2018/02/qgis-3.0-xyz-tile-layers/)
+                    ->tilesUrl('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'),
                 Forms\Components\TextInput::make('latitude')
                     ->required()
                     ->numeric(),
@@ -44,6 +56,8 @@ class OfficeResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                    
+        
                 Tables\Columns\TextColumn::make('latitude')
                     ->numeric()
                     ->sortable(),
