@@ -36,7 +36,17 @@ class OfficeResource extends Resource
                         'zoomSnap'            => 0.25,
                         'wheelPxPerZoomLevel' => 60
                     ])
-                    // tiles url (refer to https://www.spatialbias.com/2018/02/qgis-3.0-xyz-tile-layers/)
+                     ->afterStateHydrate(function (Form\Get $get, Form\Set $set, $record){
+                        $latitude = $record->latitude;
+                        $longitude = $record->longitude;
+
+                        if($latitude && $longitude)
+                        $set('location', ['lat' => $latitude, 'lng' => $longitude]);
+                     })
+
+                     ->afterStateUpdate(function ($state, Form\Get $get, Form\Set $set){
+                        
+                    })
                     ->tilesUrl('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'),
                 Forms\Components\TextInput::make('latitude')
                     ->required()
