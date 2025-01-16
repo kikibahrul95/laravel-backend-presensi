@@ -18,7 +18,7 @@ class OfficeResource extends Resource
 {
     protected static ?string $model = Office::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-building-office-2';
 
     public static function form(Form $form): Form
     {
@@ -36,24 +36,25 @@ class OfficeResource extends Resource
                         'zoomSnap'            => 0.25,
                         'wheelPxPerZoomLevel' => 60
                     ])
-                     ->afterStateHydrate(function (Form\Get $get, Form\Set $set, $record){
+                     ->afterStateHydrated(function (Forms\Get $get, Forms\Set $set, $record){
                         $latitude = $record->latitude;
                         $longitude = $record->longitude;
+                       
 
                         if($latitude && $longitude)
                         $set('location', ['lat' => $latitude, 'lng' => $longitude]);
                      })
 
-                     ->afterStateUpdate(function ($state, Form\Get $get, Form\Set $set){
+                     ->afterStateUpdated(function ($state, Forms\Get $get, Forms\Set $set){
+                        $set('latitude', state ['lat']);
+                        $set('longitude', state ['lng']);
                         
                     })
                     ->tilesUrl('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'),
                 Forms\Components\TextInput::make('latitude')
-                    ->required()
-                    ->numeric(),
+                    ->sortable,
                 Forms\Components\TextInput::make('longitude')
-                    ->required()
-                    ->numeric(),
+                     ->sortable,
                 Forms\Components\TextInput::make('radius')
                     ->required()
                     ->numeric(),
