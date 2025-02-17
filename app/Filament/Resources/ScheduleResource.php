@@ -29,10 +29,11 @@ class ScheduleResource extends Resource
                 Forms\Components\Select::make('office_id')
                     ->relationship('office', 'name')
                     ->required(),
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
+                Forms\Components\Select::make('office_id')
+                    ->relationship('office', 'name')
                     ->searchable()
                     ->required(),
+                 Forms\Components\Toggle::make('wfa') 
             ]);
     }
 
@@ -43,6 +44,8 @@ class ScheduleResource extends Resource
                 Tables\Columns\TextColumn::make('shift.name')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\ToggleColumn::make('wfa')
+                ->label('WFA'), 
                 Tables\Columns\TextColumn::make('office.name')
                     ->numeric()
                     ->sortable(),
