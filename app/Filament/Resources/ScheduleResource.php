@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Auth;
 
 class ScheduleResource extends Resource
 {
@@ -39,18 +40,27 @@ class ScheduleResource extends Resource
 
     public static function table(Table $table): Table
     {
+
+       
         return $table
+
+        ->modifyQueryUsing(function (Builder $query) {
+            $is_admin = Auth::user()->hasRole('admin');
+
+            if (!$is_admin) {
+                $query->where('user_id', Auth::user()->id);
+            }
+        } )
+
             ->columns([
                 Tables\Columns\TextColumn::make('shift.name')
-                    ->numeric()
+                ->description(fn (Schedule $record): string => $record->shift->start_time.'-'.$record->shift->end_time)
                     ->sortable(),
-                Tables\Columns\ToggleColumn::make('wfa')
+                Tables\Columns\BooleanColumn::make('wfa')
                 ->label('WFA'), 
                 Tables\Columns\TextColumn::make('office.name')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
