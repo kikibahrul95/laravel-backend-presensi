@@ -30,7 +30,7 @@ class ScheduleResource extends Resource
                 Forms\Components\Select::make('office_id')
                     ->relationship('office', 'name')
                     ->required(),
-                Forms\Components\Select::make('office_id')
+                Forms\Components\Select::make('user_id')
                     ->relationship('office', 'name')
                     ->searchable()
                     ->required(),
@@ -59,8 +59,15 @@ class ScheduleResource extends Resource
                 Tables\Columns\BooleanColumn::make('wfa')
                 ->label('WFA'), 
                 Tables\Columns\TextColumn::make('office.name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('user.email')
+                    ->label('Email')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
+                    ->label('name')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
