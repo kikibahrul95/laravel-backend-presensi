@@ -15,7 +15,7 @@ class ListSchedules extends ListRecords
     {
         return [
             Action::make('presensi')
-            ->url('')
+            ->url(route('presensi'))
             ->color('warning'),
             Actions\CreateAction::make(),
         ];
