@@ -7,6 +7,9 @@
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
      <link rel="stylesheet" href="https:unpkg.com/leaflet/dist/leaflet.css"/>
     <style>
+        #map {
+            height: 400px;
+        }
 
     </style>
 </head>
