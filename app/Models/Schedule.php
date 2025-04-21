@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Schedule extends Model
 {
-
+    use HasFactory;
     protected $fillable = [
         'user_id',
         'shift_id',
@@ -17,11 +17,11 @@ class Schedule extends Model
         
 
     ];
-    use HasFactory;
+    
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(user::class);
+        return $this->belongsTo(User::class);
     }
 
     public function shift(): BelongsTo

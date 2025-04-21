@@ -24,13 +24,13 @@ class ScheduleResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->required(),
                 Forms\Components\Select::make('shift_id')
                     ->relationship('shift', 'name')
                     ->required(),
                 Forms\Components\Select::make('office_id')
-                    ->relationship('office', 'name')
-                    ->required(),
-                Forms\Components\Select::make('user_id')
                     ->relationship('office', 'name')
                     ->searchable()
                     ->required(),
@@ -53,21 +53,17 @@ class ScheduleResource extends Resource
         } )
 
             ->columns([
-                Tables\Columns\TextColumn::make('shift.name')
-                ->description(fn (Schedule $record): string => $record->shift->start_time.'-'.$record->shift->end_time)
-                    ->sortable(),
-                Tables\Columns\BooleanColumn::make('wfa')
-                ->label('WFA'), 
-                Tables\Columns\TextColumn::make('office.name')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('user.email')
-                    ->label('Email')
-                    ->searchable()
-                    ->sortable(),
+               
                 Tables\Columns\TextColumn::make('user.name')
-                    ->label('name')
-                    ->searchable()
+                   
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('wfa')
+                    ->label('WFA'),     
+                Tables\Columns\TextColumn::make('shift.name') 
+                ->description(fn (Schedule $record): string => $record->shift->start_time.' - '.$record->shift->end_time)
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('office.name')
+                    
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
