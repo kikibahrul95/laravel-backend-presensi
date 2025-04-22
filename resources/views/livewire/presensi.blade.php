@@ -48,7 +48,7 @@
    let marker;
         document.addEventListener('livewire:initilaized', function {
             component =@this
-            const map =L.map('map').setView([{{$schedule->office->latitude}},{{$schedule->office->longitude}}],20);
+            const map = L.map('map').setView([{{$schedule->office->latitude}},{{$schedule->office->longitude}}],20);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
         
