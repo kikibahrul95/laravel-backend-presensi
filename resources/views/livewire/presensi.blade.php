@@ -30,11 +30,13 @@
 
 </div>
 <h2 class="text-2l font-bold mb-2">"Presensi</h2>
-<div id="map" class ="mb-4 rounded-lg border border-gray-300"> </div>
+<div id="map" class ="mb-4 rounded-lg border border-gray-300" wire:ignore> </div>
+<form class= "row g-3" wire:submit="store" enctype="multipart/form-data">
 <button type ="button" onclick="tagLocation()" class="px-4 py-2 bg-blue-500 text-white rounded"> Tag Location </button>
 @if($insideRadius)
-<button type ="button" class="px-4 py-2 bg-green-500 text-white rounded"> Submit Absen</button>
+<button type ="submit" class="px-4 py-2 bg-green-500 text-white rounded"> Submit Absen</button>
 @endif
+</form>
 </div>
     </div>
     <script  src= "https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -45,7 +47,7 @@
    const office =[{{$schedule->office->latitude}},{{$schedule->office->longitude}}];
    const radius = {{$schedule->office->radius}};
    let component;
-   let marker;
+   let market;
         document.addEventListener('livewire:initilaized', function {
             component =@this
             const map = L.map('map').setView([{{$schedule->office->latitude}},{{$schedule->office->longitude}}],20);
@@ -67,8 +69,8 @@
         function tagLocation(){
             if (navigator.geolocation){
                 navigator.geolocation.getCurrentPosition((position) =>{
-                    const lat = position.coords.latitude;
-                    const lng = position.coords.longtitude;
+                     lat = position.coords.latitude;
+                     lng = position.coords.longtitude;
 
                     if (marker) {
                         map.removeLayer(marker);
