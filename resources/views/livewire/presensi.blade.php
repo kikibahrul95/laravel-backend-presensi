@@ -81,6 +81,8 @@
 
                     if(isWithinRadius (lat,lng,office, radius)){
                         component.set('insideRadius', true);
+                        component.set('latitude',lat);
+                        component.set('longitude' lng);
                     } else {
                         alert('Anda diluar radius');
                     }

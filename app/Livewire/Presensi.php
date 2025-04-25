@@ -4,7 +4,10 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Schedule;
+use App\Models\Attendance;
+use App\Models\Support\Carbon;
 use Auth;
+
 
 class Presensi extends Component
 {
@@ -15,9 +18,12 @@ class Presensi extends Component
     public function render()
     {
         $schedule =Schedule::where('user_id', Auth::user()->id)->first();
+        $attedence = Attendance::where('user_id', Auth::user()->id)
+        ->where('created_at', Carbon::today())->first();
         return view('livewire.presensi', [
             'schedule' => $schedule,
-            'insideRadius' => $this-> insideRadius
+            'insideRadius' => $this-> insideRadius,
+            'attendance'=> $attedance
         ] );
     }
     public function store() {
@@ -34,10 +40,10 @@ class Presensi extends Component
             if(!$attedence) {
                 $attedence =Attedance::create([
                     'user_id'=>Auth::user()->id,
-                    'schedule_latitude'=>$schedule->latitude,
-                    'schedule_latitude'=>$scheduleschedule->latitude,
-                    'schedule_start_time'=>$scheduleschedule->start_time,
-                    'schedule_end_time'=>$scheduleschedule->end_time,
+                    'schedule_latitude'=>$schedule->office->latitude,
+                    'schedule_latitude'=>$scheduleschedule->office->latitude,
+                    'schedule_start_time'=>$scheduleschedule->shift->start_time,
+                    'schedule_end_time'=>$scheduleschedule->shift->end_time,
                     'latitude'=>$this->latitude,
                     'longitude'=>$this->longitude,
                     'start_time'=>Carbon::now()->toTimeString(),
